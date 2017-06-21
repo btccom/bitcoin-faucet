@@ -1,0 +1,22 @@
+{
+
+  "REDIS_SERVER": "127.0.0.1",
+  "REDIS_PORT": 6379,
+  "REDIS_PASSWORD": "pa$$word",
+  "REDIS_KEY_PREFIX": "testnet5",
+
+  "BITCOIND_RPC_HOST": "localhost",
+  "BITCOIND_RPC_USER": "user",
+  "BITCOIND_RPC_PASS": "pass",
+  "BITCOIND_RPC_PORT": 18332,
+
+  "FAUCET_TITLE": "BTC testnet5 faucet",
+  "FAUCET_JUST_FOR_YOU": "These testnet5 coins are just for you!",
+
+  "FAUCET_MAX_AMOUNT": 2.0,
+  "FAUCET_PERCENTAGE": 0.002,
+  "FAUCET_MAX_PER_TTL": 3,
+  "FAUCET_TTL": 10800,
+
+  "NULL": null
+}

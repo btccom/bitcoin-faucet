@@ -1,0 +1,11 @@
+extends index
+
+block content
+  form(method='POST' action='/give')
+
+    div.form-group
+      label(for='address') Testnet Address:
+      input#address.form-control(type='text', placeholder='Testnet5 address' name='address')
+      div(class='form-submit')
+        button.btn.btn-primary(type='submit', class='btn-getcoins') Get coins
+        !=captcha

@@ -1,0 +1,25 @@
+{
+  "name": "testnet5-faucet",
+  "version": "0.1.0",
+  "description": "testnet5 faucet",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "bitcoin",
+    "testnet5",
+    "segwit2x"
+  ],
+  "author": "Tobias Hoffmann",
+  "license": "MIT",
+  "dependencies": {
+    "bitcoin": "^3.0.1",
+    "bluebird": "^3.5.0",
+    "body-parser": "^1.17.2",
+    "bootstrap": "^3.3.7",
+    "express": "^4.15.3",
+    "pug": "^2.0.0-rc.2",
+    "redis": "^2.7.1"
+  }
+}

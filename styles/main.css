@@ -1,0 +1,18 @@
+.body {
+    white-space: pre;
+}
+
+.centered {
+    text-align: center;
+}
+
+.btn.btn-getcoins {
+    float: right;
+}
+
+.form {
+    display: inline;
+}
+.form-group .form-submit {
+    margin-top: 20px;
+}
