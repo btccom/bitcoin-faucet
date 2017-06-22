@@ -57,19 +57,20 @@ app.post('/give', (req, res) => {
     // Check if IP already got coins
     let ip = req.ip;
 
-    ipdb.incr(ip).then((counter) => {
-        console.log('give', ip, counter);
+    console.log('give', ip, counter);
 
-        if(counter > config.FAUCET_MAX_PER_TTL) {
-            return renderRejection('you did that to often already');
+    if (counter > config.FAUCET_MAX_PER_TTL) {
+        return renderRejection('you did that to often already');
+    }
+
+    // Validate address provided by the user
+    client.validateAddress(req.body.address, (err, res) => {
+        if (err) {
+            return renderRejection('check back later');
         }
-
-        // Validate address provided by the user
-        client.validateAddress(req.body.address, (err, res) => {
-            if(err) {
-                return renderRejection('check back later');
-            }
-            if(res.isvalid) {
+        if (res.isvalid) {
+            // Increment counter for IP
+            ipdb.incr(ip).then((counter) => {
                 // Get balance to calculate how much to give and to check for low balance (reporting)
                 client.getBalance((err, res) => {
                     if (err) {
@@ -77,7 +78,7 @@ app.post('/give', (req, res) => {
                     }
 
                     // Report if balance low
-                    if(res < config.FAUCET_REPORT_LOW_BALANCE){
+                    if (res < config.FAUCET_REPORT_LOW_BALANCE) {
                         reporter.report("Faucet balance low!! " + res + " tBTC left over.");
                     }
 
@@ -97,7 +98,7 @@ app.post('/give', (req, res) => {
                         }
                         console.log('tx:' + res, ip, amount, address);
 
-                        if(config.FAUCET_REPORT_TRANSACTIONS){
+                        if (config.FAUCET_REPORT_TRANSACTIONS) {
                             reporter.report("txid:\t\t" + res + "\namount:\t" + amount + " tBTC\naddress:\t" + address + "\nip:\t\t" + ip);
                         }
 
@@ -110,10 +111,10 @@ app.post('/give', (req, res) => {
                         });
                     });
                 });
-            } else {
-                return renderRejection('invalid testnet address');
-            }
-        });
+            });
+        } else {
+            return renderRejection('invalid testnet address');
+        }
     });
 });
 
