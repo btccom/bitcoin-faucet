@@ -14,6 +14,10 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
     extended: true
 }));
 
+if (config.TRUST_PROXY) {
+    app.set('trust proxy', config.TRUST_PROXY);
+}
+
 let client = new bitcoin.Client({
     host: config.BITCOIND_RPC_HOST,
     port: config.BITCOIND_RPC_PORT,
@@ -51,7 +55,7 @@ app.post('/give', (req, res) => {
     };
 
     // Check if IP already got coins
-    let ip = req.connection.remoteAddress;
+    let ip = req.ip;
 
     ipdb.incr(ip).then((counter) => {
         console.log('give', ip, counter);

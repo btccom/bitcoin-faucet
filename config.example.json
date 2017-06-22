@@ -13,6 +13,8 @@
   "FAUCET_TITLE": "BTC testnet5 faucet",
   "FAUCET_JUST_FOR_YOU": "These testnet5 coins are just for you!",
 
+  "TRUST_PROXY": null,
+
   "FAUCET_MAX_AMOUNT": 2.0,
   "FAUCET_PERCENTAGE": 0.002,
   "FAUCET_MAX_PER_TTL": 3,
