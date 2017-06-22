@@ -61,6 +61,11 @@ app.post('/give', (req, res) => {
     client.validateAddress(req.body.address, (err, res) => {
         if (err) {
             console.log('give', ip, "user entered: [" + req.body.address + ']');
+
+            if(config.FAUCET_REPORT_ERRORS) {
+                reporter.report('mistake', ip + ' entered ' + req.body.address);
+            }
+
             return renderRejection('check back later');
         }
         if (res.isvalid) {
@@ -80,7 +85,7 @@ app.post('/give', (req, res) => {
 
                     // Report if balance low
                     if (res < config.FAUCET_REPORT_LOW_BALANCE) {
-                        reporter.report("Faucet balance low!! " + res + " tBTC left over.");
+                        reporter.report('warning', "Faucet balance low!! " + res + " tBTC left over.");
                     }
 
                     let amount = (config.FAUCET_PERCENTAGE * res).toFixed(4);
@@ -100,7 +105,7 @@ app.post('/give', (req, res) => {
                         console.log('tx:' + res, ip, amount, address);
 
                         if (config.FAUCET_REPORT_TRANSACTIONS) {
-                            reporter.report("txid:\t\t" + res + "\namount:\t" + amount + " tBTC\naddress:\t" + address + "\nip:\t\t" + ip);
+                            reporter.report('good', "ADDRESS:\t" + address + "\nAMOUNT:\t\t" + amount + "\n" + res);
                         }
 
                         return response.render('done', {
