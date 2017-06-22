@@ -73,7 +73,11 @@ app.post('/give', (req, res) => {
                         amount = config.FAUCET_MAX_AMOUNT;
                     }
                     let address = req.body.address;
-                    client.sendToAddress(address, amount, (err, res) => {
+
+                    let send = {};
+                    send[address] = amount;
+
+                    client.sendMany("", send, 0, (err, res) => {
                         if (err) {
                             return renderRejection('error sending. check back later, you did nothing wrong.');
                         }
