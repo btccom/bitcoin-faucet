@@ -1,10 +1,10 @@
+let db = require('./ipdb');
 let express = require('express');
 let bitcoin = require('bitcoin');
-let config = require('./config.json');
+let reporter = require('./reporter');
 let bodyParser = require('body-parser');
+let config = require('./config.json');
 
-
-let db = require('./ipdb');
 let ipdb = new db.default(config.REDIS_SERVER, config.REDIS_PORT, config.REDIS_PASSWORD);
 
 // INIT //
@@ -58,14 +58,21 @@ app.post('/give', (req, res) => {
             return renderRejection('you did that to often already');
         }
 
+        // Validate address provided by the user
         client.validateAddress(req.body.address, (err, res) => {
             if(err) {
                 return renderRejection('check back later');
             }
             if(res.isvalid) {
+                // Get balance to calculate how much to give and to check for low balance (reporting)
                 client.getBalance((err, res) => {
                     if (err) {
                         console.log(err);
+                    }
+
+                    // Report if balance low
+                    if(res < config.FAUCET_REPORT_LOW_BALANCE){
+                        reporter.report("Faucet balance low!! " + res + " tBTC left over.");
                     }
 
                     let amount = (config.FAUCET_PERCENTAGE * res).toFixed(4);
@@ -74,6 +81,7 @@ app.post('/give', (req, res) => {
                     }
                     let address = req.body.address;
 
+                    // Create send object for sendMany
                     let send = {};
                     send[address] = amount;
 
@@ -82,6 +90,10 @@ app.post('/give', (req, res) => {
                             return renderRejection('error sending. check back later, you did nothing wrong.');
                         }
                         console.log('tx:' + res, ip, amount, address);
+
+                        if(config.FAUCET_REPORT_TRANSACTIONS){
+                            reporter.report("txid:\t\t" + res + "\namount:\t" + amount + " tBTC\naddress:\t" + address + "\nip:\t\t" + ip);
+                        }
 
                         return response.render('done', {
                             title: config.FAUCET_TITLE,

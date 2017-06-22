@@ -14,6 +14,7 @@
   "author": "Tobias Hoffmann",
   "license": "MIT",
   "dependencies": {
+    "@slack/client": "^3.10.0",
     "bitcoin": "^3.0.1",
     "bluebird": "^3.5.0",
     "body-parser": "^1.17.2",
