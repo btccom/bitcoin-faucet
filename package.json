@@ -1,5 +1,5 @@
 {
-  "name": "testnet5-faucet",
+  "name": "bitcoin-faucet",
   "version": "0.1.0",
   "description": "testnet5 faucet",
   "main": "app.js",
