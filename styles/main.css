@@ -1,13 +1,37 @@
-.body {
-    white-space: pre;
+html {
+    /*white-space: pre;*/
+    background-color: #e6e9ee;
+    height: 100%;
+    width: 100%;
+}
+
+.mainLogo {
+    display: block;
+    margin: 0 auto;
+    width: 300px;
+    padding-bottom: 15px;
 }
 
 .centered {
     text-align: center;
 }
 
+.maindiv {
+    background-color: #e6e9ee;
+    padding-top: 100px;
+    height: 100%;
+    width: 100%;
+}
+
 .btn.btn-getcoins {
-    float: right;
+    background-image: none;
+    background-color: #286090;
+    border-color: #122b40;
+}
+
+.btn.btn-getcoins:hover {
+    background-color: #204d74;
+    border-color: #122b40;
 }
 
 .form {
@@ -15,4 +39,11 @@
 }
 .form-group .form-submit {
     margin-top: 20px;
+    text-align: center;
+}
+
+.footer {
+    position: absolute;
+    bottom: 20px;
+    width: 100%;
 }

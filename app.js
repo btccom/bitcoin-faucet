@@ -24,6 +24,7 @@ let client = new bitcoin.Client({
 
 app.set('view engine', 'pug');
 app.use('/styles', express.static('styles'));
+app.use('/img', express.static('img'));
 ////////////
 
 app.get('/', (req, res) => {

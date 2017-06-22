@@ -11,15 +11,17 @@ html
 
 
     body
-        h1(class='centered')= title
 
-        h3(class='centered')= infotext
+        div(class='maindiv')
+            img(src='img/BTC.com_normal.png', class='mainLogo')
+            h2(class='centered')= title
 
+            h3(class='centered')= infotext
 
-        .main.container
-            .row
-                .col-md-6.col-md-offset-3
-                    h5.text-center
-                        !=message
-                    block content
-        <!-- lacksfish -->
+            .main.container
+                .row
+                    .col-md-6.col-md-offset-3
+                        h5.text-center
+                        block content
+            p(class=['centered', 'footer'])!=message
+            <!-- lacksfish -->
