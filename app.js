@@ -57,20 +57,21 @@ app.post('/give', (req, res) => {
     // Check if IP already got coins
     let ip = req.ip;
 
-    console.log('give', ip, counter);
-
-    if (counter > config.FAUCET_MAX_PER_TTL) {
-        return renderRejection('you did that to often already');
-    }
-
     // Validate address provided by the user
     client.validateAddress(req.body.address, (err, res) => {
         if (err) {
+            console.log('give', ip, "user entered: [" + req.body.address + ']');
             return renderRejection('check back later');
         }
         if (res.isvalid) {
             // Increment counter for IP
             ipdb.incr(ip).then((counter) => {
+
+                console.log('give', ip, "user entered: [" + req.body.address + ']', counter);
+
+                if (counter > config.FAUCET_MAX_PER_TTL) {
+                    return renderRejection('you did that to often already');
+                }
                 // Get balance to calculate how much to give and to check for low balance (reporting)
                 client.getBalance((err, res) => {
                     if (err) {
@@ -113,6 +114,7 @@ app.post('/give', (req, res) => {
                 });
             });
         } else {
+            console.log('give', ip, "user entered: [" + req.body.address + ']');
             return renderRejection('invalid testnet address');
         }
     });
